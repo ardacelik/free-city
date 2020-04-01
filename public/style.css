@@ -1,0 +1,153 @@
+
+body{
+    font-family: 'Titillium Web', sans-serif;
+    background-color: black;
+    color: white;
+    
+}
+h1{
+    line-height: 30px;
+    margin: 0 15px 5px 0px;
+    padding: 0 0 0 0;
+}
+h2 {
+    font-size: 100%;
+    margin: 0 15px 0 0px;
+}
+h3 {
+    color: gray;
+    margin: 0 15px 0 0px;
+    
+}
+p{
+    line-height: 15px;
+}
+.container{
+    display: flex;
+    justify-content: space-evenly;
+    background-color: black;
+    z-index: 0;
+}
+.title{
+    position: fixed;
+    padding: 0 0 0 0;
+    width: inherit;
+    color:rgb(46, 211, 170);
+    border-bottom: 1px solid rgb(46, 211, 170);
+    background-color: black;
+    z-index:100;
+}
+
+#titleProjects{
+    padding: 5px;
+}
+.hList{
+    height: 940px;
+    display: flex;
+    width: 25vw;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    overflow-x: scroll;
+    border: 1px rgb(46, 211, 170) solid;
+    align-items: center;
+}
+.hList::-webkit-scrollbar {
+    display: none;
+}
+
+.hList .tile{
+    position: relative;
+    top: 45px;
+    padding: 10px;
+    background-color: black;
+    transition-duration: 0.5s;
+}
+.hList .tile:hover{
+    transform: scale(1.05);
+}
+
+.header{
+    position: relative;
+    display:flex;
+    justify-content: space-between;
+    background-color: gray;
+    height:100px;
+    z-index: 1;
+}
+
+.header img {
+    height: 100px;
+    border-left: 1px solid black;
+    background-color: white;
+}
+
+.bodyer{
+    position: relative;
+    top: 0;
+    z-index: 0; 
+    width: inherit;
+    overflow: hidden;
+}
+
+.info{
+    padding:10px;
+}
+
+.btn-primary {
+    text-decoration: none;
+    color: rgb(46, 211, 170);
+    border: solid rgb(46, 211, 170) 1pt;
+    border-radius: 5px;
+    padding: 0 10px 0 10px;
+    transition: 0.5s;
+}
+.btn-primary:hover {
+    background-color: rgba(46, 211, 170, 1);
+    color:black;
+}
+
+.dashboard{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+}
+
+.section{
+    display: flex;
+    flex-flow: row nowrap;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    height: 48vh;
+    width: 70vw;
+    background-color: black;
+}
+.section::-webkit-scrollbar {
+    display: none;
+}
+
+.section .tile{
+    left: 0px;
+    position: relative;
+    padding: 1vh;
+    width: 32vw;
+    background-color: black;
+    transition-duration: 0.5s;
+}
+.section .scrollBtn{
+    height: 48vh;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    padding: 0 10px 0 10px;
+    background-color: rgb(0, 255, 191);
+    transition-duration: 0.5s;
+    z-index: 10;
+}
+#leftScroll{
+    width: 40px;
+    left:0;
+}
+#rightScroll{
+    width: 40px;
+    right:0;
+}

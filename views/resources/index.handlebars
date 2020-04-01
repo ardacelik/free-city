@@ -1,0 +1,16 @@
+{{#each resources}}
+    <div class="card card-body mb-3">
+        <h4>{{name}}</h4>
+        <p>{{description}}</p>
+        <hr>
+        <p class="lead">Organizer: {{organizerName}}</p>
+        <p>Organizer Info: {{organizerDesc}}</p>
+        <a href="/resources/edit/{{id}}" class="btn btn-warning btn-block mb-2">Edit</a>
+        <form method="post" action="/resources/{{id}}?_method=DELETE">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="submit" class="btn btn-danger btn-block" value="Delete">
+        </form>
+    </div>
+{{else}}
+    <p>No resources listed</p>
+{{/each}}

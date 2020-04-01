@@ -1,0 +1,27 @@
+<div class="title">
+                <h1 id="titleProjects">Projects</h1>
+            </div>
+
+            {{#each resources}}
+                <div class="tile">
+                <div class="header" id="header0">
+                    <div class="info">
+                        <h2>{{name}}</h2>
+                        <button  class="btn btn-primary btn-lg joinBtn" href="#" role="button">Join</button >
+                    </div>
+                    <div class="image">
+                        <img src="blueCircle.png" alt="">
+                    </div>
+                </div>
+                <div class="bodyer" id="bodyer0">
+                    <p>{{description}}</p>
+                    <br>
+                    <p>Website: {{website}}</p>
+                    <p>Phone: {{phone}}</p>
+                    <p>E-mail: {{email}}</p>
+                    <p>Address: {{address}}</p>
+                </div>
+            </div>
+            {{else}}
+                <p>No resources available!</p>
+            {{/each}}

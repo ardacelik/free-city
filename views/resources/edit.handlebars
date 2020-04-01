@@ -1,0 +1,48 @@
+{{#each errors}}
+    <div class="alert alert-danger">{{text}}</div>
+{{else}}
+
+{{/each}}
+<div class="card card-body">
+    <h3>Edit Resource</h3>
+    <form action="/resources/{{resource.id}}?_method=PUT" method="post">
+    <input type="hidden" name="_method" value="PUT">
+        <h1>1. Event Details</h1>
+                    <hr />
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Give it a short distinct name"
+                            name="name"
+                            value="{{resource.name}}"
+                            required
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea class="form-control" rows="5" name="description" required>{{resource.description}}</textarea>
+                    </div>
+                    <h1>2. Organizer Information</h1>
+                    <hr />
+                    <div class="form-group">
+                        <label for="organizerName">Organizer Name</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Who's organizing this event?"
+                            name="organizerName"
+                            value="{{resource.organizerName}}"
+                            required
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label for="organizerDesc">Organizer Description</label>
+                        <textarea class="form-control" rows="5" name="organizerDesc" required>{{resource.organizerDesc}}</textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">
+                        Submit
+                    </button>
+                </form>
+</div>
