@@ -1,6 +1,7 @@
 const ErrorResponse = require("../utils/errorResponse");
 const asyncHandler = require("../middleware/async");
 const Resource = require("../models/Resource");
+const { ensureAuthencticated } = require("../helpers/auth");
 
 // @desc    Get all resources
 // @route   GET /
@@ -176,7 +177,10 @@ exports.deleteResource = asyncHandler(async (req, res, next) => {
     //     );
     // }
 
-    resource.remove(() => res.redirect("/resources"));
+    resource.remove(() => {
+        req.flash("success_msg", "Resource removed");
+        res.redirect("/resources");
+    });
 
     // res.status(200).json({ success: true, data: resource });
 });
