@@ -3,27 +3,27 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
 // Load user model
-const User = mongoose.model("User");
+const User = require("../models/User");
 
 module.exports = function(passport) {
     passport.use(
         new LocalStrategy(
             { usernameField: "email" },
             (email, password, done) => {
-                // Match user
+                // Check if user exists
                 User.findOne({
                     email: email
                 }).then(user => {
                     if (!user) {
                         return done(null, false, { message: "No User Found" });
                     }
-
-                    // Match password
+                    // Check if password is correct
                     bcrypt.compare(password, user.password, (err, isMatch) => {
                         // console.log(user);
                         // console.log(password);
                         // console.log(user.password);
-                        return done(null, user);
+                        // console.log(isMatch);
+                        if (err) throw err;
                         if (isMatch) {
                             return done(null, user);
                         } else {

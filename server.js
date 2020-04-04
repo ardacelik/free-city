@@ -2,7 +2,6 @@ const express = require("express");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
-const errorHandler = require("./middleware/error");
 const connectDB = require("./config/db");
 const handlebars = require("express-handlebars");
 const bodyParser = require("body-parser");
@@ -10,8 +9,6 @@ const methodOverride = require("method-override");
 const flash = require("connect-flash");
 const session = require("express-session");
 const passport = require("passport");
-const bcrypt = require("bcryptjs");
-const mongoose = require("mongoose");
 
 // Load env vars
 dotenv.config({ path: "./config/config.env" });
@@ -20,7 +17,6 @@ dotenv.config({ path: "./config/config.env" });
 connectDB();
 
 require("./models/User");
-const User = mongoose.model("User");
 
 // Route files
 const resources = require("./routes/resources");
@@ -79,67 +75,11 @@ if (process.env.NODE_ENV === "development") {
 app.use("/resources", resources);
 app.use("/auth", auth);
 
-app.use(errorHandler);
-
-app.use(express.static("public"));
-
 // Home route
 app.get("/", (req, res) => res.render("index"));
 
 // About route
 app.get("/about", (req, res) => res.render("about"));
-
-app.post("/auth/register", (req, res) => {
-    let errors = [];
-    if (req.body.password != req.body.password2) {
-        errors.push({ text: "Passwords do not match" });
-    }
-    if (req.body.password.length < 4) {
-        errors.push({ text: "Passwords must be at least 4 characters" });
-    }
-    if (errors.length > 0) {
-        res.render("users/register", {
-            errors: errors,
-            name: req.body.name,
-            email: req.body.email,
-            password: req.body.password,
-            password2: req.body.password2
-        });
-    } else {
-        User.findOne({ email: req.body.email }).then(user => {
-            if (user) {
-                req.flash("error_msg", "Email already registered");
-                res.redirect("/auth/register");
-            } else {
-                const newUser = new User({
-                    name: req.body.name,
-                    email: req.body.email,
-                    password: req.body.password
-                });
-
-                bcrypt.genSalt(10, (err, salt) => {
-                    bcrypt.hash(newUser.password, salt, (err, hash) => {
-                        if (err) throw err;
-                        newUser.password = hash;
-                        newUser
-                            .save()
-                            .then(user => {
-                                req.flash(
-                                    "success_msg",
-                                    "You are now registered and can log in"
-                                );
-                                res.redirect("/auth/login");
-                            })
-                            .catch(err => {
-                                console.log(err);
-                                return;
-                            });
-                    });
-                });
-            }
-        });
-    }
-});
 
 const PORT = process.env.PORT || 5000;
 
