@@ -1,17 +1,38 @@
 const express = require("express");
 const Resource = require("../models/Resource");
 const { ensureAuthenticated } = require("../helpers/auth");
+const kmeans = require("node-kmeans");
+
 const router = express.Router();
 
 // @desc    Get all resources
 // @route   GET /
 // @access  Public
 router.get("/", (req, res) => {
+    let vectors = new Array();
+
     Resource.find({})
         .sort({ createdAt: "desc" })
         .then(resources => {
+            for (let i = 0; i < resources.length; i++) {
+                vectors[i] = [
+                    resources[i].location.coordinates[0],
+                    resources[i].location.coordinates[1]
+                ];
+            }
+            kmeans.clusterize(vectors, { k: 3 }, (err, res) => {
+                ///  {k: 3} you can change the number into anything amount of clusters
+                if (err) console.error(err);
+                else
+                    for (let j = 0; j < res.length; j++) {
+                        console.log(res[j]["clusterInd"]); /// this will return the datasets in each cluster in the form of a number representing the array data
+                    }
+            });
+            console.log(resources);
+            //console.log(vectors);
             res.render("resources/index", {
-                resources
+                resources,
+                vectors
             });
         });
 });
@@ -125,5 +146,25 @@ router.delete("/:id", ensureAuthenticated, (req, res) => {
         }
     });
 });
+
+// const data = [
+//     {'company': 'test' , 'lat': 43.9406384, 'lng': -38.8871807},
+
+// ];
+
+// let vectors = new Array();
+// for (let i = 0 ; i < data.length ; i++) {
+//     vectors[i] = [ data[i]['lat'] , data[i]['lng']];    // Create the data 2D-array (vectors) describing the data, lat being the latitude given from above and lng being the longitude given from above
+// }
+
+// const kmeans = require('node-kmeans');
+// kmeans.clusterize(vectors, {k: 3}, (err,res) => {   ///  {k: 3} you can change the number into anything amount of clusters
+//     if (err) console.error(err);
+//     else
+//     for (let j = 0 ; j < res.length ; j++) {
+
+//         console.log(res[j]['clusterInd']);    /// this will return the datasets in each cluster in the form of a number representing the array data
+//     }
+// });
 
 module.exports = router;
