@@ -35,6 +35,9 @@ router.post("/add", (req, res) => {
     if (!req.body.description) {
         errors.push({ text: "Please add a description for your resource" });
     }
+    if (!req.body.address) {
+        errors.push({ text: "Please add an address for the resource" });
+    }
     if (!req.body.organizerName) {
         errors.push({ text: "Please add an organizer name" });
     }
@@ -47,6 +50,7 @@ router.post("/add", (req, res) => {
             errors: errors,
             name: req.body.name,
             description: req.body.description,
+            address: req.body.address,
             organizerName: req.body.organizerName,
             organizerDesc: req.body.organizerDesc
         });
@@ -54,6 +58,7 @@ router.post("/add", (req, res) => {
         const newUser = {
             name: req.body.name,
             description: req.body.description,
+            address: req.body.address,
             organizerName: req.body.organizerName,
             organizerDesc: req.body.organizerDesc,
             user: req.user.id
@@ -61,6 +66,7 @@ router.post("/add", (req, res) => {
         new Resource(newUser).save().then(resource => {
             req.flash("success_msg", "Resource added");
             res.redirect("/resources");
+            console.log(req.body);
         });
     }
 });
@@ -90,6 +96,7 @@ router.put("/:id", ensureAuthenticated, (req, res) => {
     }).then(resource => {
         resource.name = req.body.name;
         resource.description = req.body.description;
+        resource.address = req.body.address;
         resource.organizerName = req.body.organizerName;
         resource.organizerDesc = req.body.organizerDesc;
 

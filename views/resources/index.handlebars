@@ -5,6 +5,7 @@
         <hr>
         <p class="lead">Organizer: {{organizerName}}</p>
         <p>Organizer Info: {{organizerDesc}}</p>
+        <p>Address: {{location.formattedAddress}}</p>
             <a href="/resources/edit/{{id}}" class="btn btn-warning btn-block mb-2">Edit</a>
             <form method="post" action="/resources/{{id}}?_method=DELETE">
                 <input type="hidden" name="_method" value="DELETE">
